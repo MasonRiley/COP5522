@@ -1,0 +1,10 @@
+# !/bin/bash
+
+NUM_ROWS=10000
+NUM_COLS=10000
+
+echo UNOPTIMIZED TEST
+./unoptimized $NUM_ROWS $NUM_COLS
+
+echo OPTIMIZED TEST
+./optimized $NUM_ROWS $NUM_COLS 
