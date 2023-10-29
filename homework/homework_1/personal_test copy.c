@@ -1,10 +1,8 @@
-// This code is identical to opt3.c and is used to implement Intel SIMD Intrinsics along with gcc optimization flags
-
 #include <microtime.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <xmmintrin.h>
+#include <xmmintrin.h> // Include header for SSE intrinsics
 
 typedef float* Matrix;
 
@@ -31,38 +29,39 @@ void initMatrix(Matrix A, int rows, int cols) {
             A[i * cols + j] = 1.0 / (i + j + 2);
 }
 
-// Implements Intel SIMD Intrinsics
 void matVecMult(Matrix A, Matrix B, Matrix C, int rows, int cols) {
     int i, k;
-    __m128 a, b, sum; // Declare SIMD registers for holding values from a and b and summing them up
+    __m128i a, b, sum // Declare SIMD registers for holding values from A and B and summing them up.
     
-    // Calculate how many elements can be processed using SIMD 
-    int simd_end = cols - (cols % 4); 
+    // Calculate how many elements can be processed using SIMD. 
+    // Example: If cols = 10 then simd_end = 8, because 8 is the largest multiple of 4 less than 10.
+    int simd_end = 
     
     for (i = 0; i < rows; i++) {
-        sum = _mm_setzero_ps();  // Initialize sum to zero using SIMD instructions
+        sum =  // Initialize the sum to zero using SIMD instructions.
         
-        // Begin SIMD sum loop
-        for (k = 0; k < simd_end; k += 4) {  // Loop over the elements of matrix A and B in chunks of 4 since SIMD can process 4 floats in parallel
-            // Load 4 elements from matrix A into an SIMD register. 
-            // I had trouble implementing 16-byte aligned memory so I use
-            // unaligned load because memory might not be 16-byte aligned
-            a = _mm_loadu_ps(&A[i * cols + k]); 
+        // SIMD part starts
+        for (k = 0; k < ; k += ) {  // Loop over the elements of matrix A and B in chunks of 4 since SIMD can process 4 ints in parallel.
+            // Load 4 elements from matrix A into a SIMD register. Use unaligned load because memory might not be 16-byte aligned.
+            a =  
             
-            // Load 4 elements from matrix B into another SIMD register
-            b = _mm_loadu_ps(&B[k]);
+            // Load 4 corresponding elements from matrix B into another SIMD register.
+            b = 
             
-            // Multiply the elements from A and B and add to the sum
-            sum = _mm_add_ps(sum, _mm_mul_ps(a, b));
+            // Multiply the elements from A and B and add to the sum.
+            // This adds a[0]*b[0], a[1]*b[1], ... to corresponding elements in sum.
+            sum = 
         }
         
-        // Store the 4 SIMD elements in an array so we can sum them up
+        // Sum up the elements stored in the sum SIMD register.
+        // Store the 4 SIMD elements in an array so we can access them.
         float temp[4];
-        _mm_store_ps(temp, sum);
-        for (k = 0; k < 4; k++)
+        (temp, sum);
+        for (k = 0; k < 4; k++)  // Sum these 4 values to C[i]. 
             C[i] += temp[k];
         
-        // This loop handles the tail elements that are left after processing with SIMD
+        // Handle any remaining elements in A and B matrices after SIMD operations.
+        // This loop deals with the tail elements that are left after processing with SIMD.
         for (k = simd_end; k < cols; k++) 
             C[i] += A[i * cols + k] * B[k];
     }
