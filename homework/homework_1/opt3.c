@@ -1,4 +1,4 @@
-// This code is identical to opt3.c and is used to implement Intel SIMD Intrinsics along with gcc optimization flags
+// This code implements Intel SIMD Intrinsics
 
 #include <microtime.h>
 #include <stdio.h>
