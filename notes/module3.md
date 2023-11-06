@@ -28,3 +28,9 @@ T_parallel = T_serial / p + T_overhead
 * If we increase the number of processes/threads and keep the efficiency fixed without increasing problem size, the problem is strongly scalable
 
 * If we keep the efficiency fixed by increasing the problem size at the same rate as we increase number of processes/threads, the problem is weakly scalable
+
+## Foster's Methodology
+
+* Partitioning - Divide the computation to be performed and the data operated on by the computation into small tasks.
+
+ > NOTE: The focus here should be on identifying tasks that can be executed in paralle

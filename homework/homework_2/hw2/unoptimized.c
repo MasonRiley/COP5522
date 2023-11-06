@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <omp.h>
 
 typedef float* Matrix;
 
@@ -29,14 +28,12 @@ void initMatrix(Matrix A, int rows, int cols) {
       A[i * cols + j] = 1.0 / (i + j + 2);
 }
 
-// This simple use of the pragma directive results in the greatest performance boost
-// but I cannot control the number of processes for testing.
+// This can be improved!
 void matVecMult(Matrix A, Matrix B, Matrix C, int rows, int cols) {
   int i, k;
 
   memset(C, 0, rows * sizeof(C[0]));
 
-  #pragma omp parallel for private(k)
   for (i = 0; i < rows; i++)
     for (k = 0; k < cols; k++)
       C[i] += A[i * cols + k] * B[k];

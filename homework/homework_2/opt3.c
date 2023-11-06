@@ -29,14 +29,13 @@ void initMatrix(Matrix A, int rows, int cols) {
       A[i * cols + j] = 1.0 / (i + j + 2);
 }
 
-// This simple use of the pragma directive results in the greatest performance boost
-// but I cannot control the number of processes for testing.
+// Uses 'for', 'schedule', and 'private' directives to achieve a greater performance boost. 
 void matVecMult(Matrix A, Matrix B, Matrix C, int rows, int cols) {
   int i, k;
 
   memset(C, 0, rows * sizeof(C[0]));
 
-  #pragma omp parallel for private(k)
+  #pragma omp parallel for schedule(dynamic, 8) private(k)
   for (i = 0; i < rows; i++)
     for (k = 0; k < cols; k++)
       C[i] += A[i * cols + k] * B[k];

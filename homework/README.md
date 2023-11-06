@@ -1,9 +1,3 @@
 # Homework
 
-Each homework will come with its own README to explain how to run it.
-
-## Guidelines
-
-https://uwf-fang.github.io/research/report-guide.html
-
-No abstract, short sections (1-2 lines)
+[Link to the Google Sheets containing my data](https://docs.google.com/spreadsheets/d/11vxwa0WOuJryH6M0RlsLizdxCJHXp1COny9GY0wUPNc/edit?usp=sharing)
